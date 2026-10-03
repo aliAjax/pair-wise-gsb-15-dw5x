@@ -6,5 +6,8 @@ export interface FlowNode {id:string;type:NodeKind;position:{x:number;y:number};
 export interface FlowEdge {id:string;source:string;target:string;label?:string}
 export interface Version {version:number;createdAt:string;note:string;nodes:FlowNode[];edges:FlowEdge[]}
 export interface Workflow {id:string;name:string;domain:string;status:WorkflowStatus;version:number;editor:string;updatedAt:string;publishedAt?:string;abnormalCount:number;nodes:FlowNode[];edges:FlowEdge[];versions:Version[]}
-export interface Instance {id:string;workflowId:string;applicant:string;domain:string;currentNode:string;status:'abnormal'|'timeout'|'running'|'completed';submittedAt:string;duration:string;risk:'high'|'medium'|'low';timeline:{title:string;time:string;status:string}[]}
+export interface Instance {id:string;workflowId:string;applicant:string;domain:string;currentNode:string;status:'abnormal'|'timeout'|'running'|'completed';submittedAt:string;duration:string;risk:'high'|'medium'|'low';timeline:{title:string;time:string;status:string}[];version?:number}
 export interface ValidationIssue {nodeId:string;level:'error'|'warning';message:string}
+export type MigrationItemStatus='pending'|'migrated'|'conflict'|'failed'|'skipped'|'unresolved';
+export interface MigrationItem {instanceId:string;sourceVersion:number|null;targetVersion:number;token:number;status:MigrationItemStatus;reason:string}
+export interface MigrationBatch {id:string;workflowId:string;createdAt:string;targetVersion:number;attempts:number;items:MigrationItem[]}
